@@ -23,7 +23,7 @@ type User struct {
 	// Secret holds the value of the "secret" field.
 	Secret string `json:"secret,omitempty"`
 	// AuthToken holds the value of the "auth_token" field.
-	AuthToken string `json:"auth_token,omitempty"`
+	AuthToken uuid.UUID `json:"auth_token,omitempty"`
 	// Name holds the value of the "name" field.
 	Name string `json:"name,omitempty"`
 	// CreatedAt holds the value of the "created_at" field.
@@ -70,11 +70,11 @@ func (*User) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case user.FieldEmail, user.FieldSecret, user.FieldAuthToken, user.FieldName:
+		case user.FieldEmail, user.FieldSecret, user.FieldName:
 			values[i] = new(sql.NullString)
 		case user.FieldCreatedAt, user.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
-		case user.FieldID:
+		case user.FieldID, user.FieldAuthToken:
 			values[i] = new(uuid.UUID)
 		default:
 			values[i] = new(sql.UnknownType)
@@ -110,10 +110,10 @@ func (u *User) assignValues(columns []string, values []any) error {
 				u.Secret = value.String
 			}
 		case user.FieldAuthToken:
-			if value, ok := values[i].(*sql.NullString); !ok {
+			if value, ok := values[i].(*uuid.UUID); !ok {
 				return fmt.Errorf("unexpected type %T for field auth_token", values[i])
-			} else if value.Valid {
-				u.AuthToken = value.String
+			} else if value != nil {
+				u.AuthToken = *value
 			}
 		case user.FieldName:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -186,7 +186,7 @@ func (u *User) String() string {
 	builder.WriteString(u.Secret)
 	builder.WriteString(", ")
 	builder.WriteString("auth_token=")
-	builder.WriteString(u.AuthToken)
+	builder.WriteString(fmt.Sprintf("%v", u.AuthToken))
 	builder.WriteString(", ")
 	builder.WriteString("name=")
 	builder.WriteString(u.Name)

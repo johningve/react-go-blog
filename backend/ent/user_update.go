@@ -11,6 +11,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/google/uuid"
 	"github.com/johningve/react-go-blog/backend/ent/comment"
 	"github.com/johningve/react-go-blog/backend/ent/post"
 	"github.com/johningve/react-go-blog/backend/ent/predicate"
@@ -43,8 +44,16 @@ func (uu *UserUpdate) SetSecret(s string) *UserUpdate {
 }
 
 // SetAuthToken sets the "auth_token" field.
-func (uu *UserUpdate) SetAuthToken(s string) *UserUpdate {
-	uu.mutation.SetAuthToken(s)
+func (uu *UserUpdate) SetAuthToken(u uuid.UUID) *UserUpdate {
+	uu.mutation.SetAuthToken(u)
+	return uu
+}
+
+// SetNillableAuthToken sets the "auth_token" field if the given value is not nil.
+func (uu *UserUpdate) SetNillableAuthToken(u *uuid.UUID) *UserUpdate {
+	if u != nil {
+		uu.SetAuthToken(*u)
+	}
 	return uu
 }
 
@@ -203,7 +212,7 @@ func (uu *UserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		_spec.SetField(user.FieldSecret, field.TypeString, value)
 	}
 	if value, ok := uu.mutation.AuthToken(); ok {
-		_spec.SetField(user.FieldAuthToken, field.TypeString, value)
+		_spec.SetField(user.FieldAuthToken, field.TypeUUID, value)
 	}
 	if value, ok := uu.mutation.Name(); ok {
 		_spec.SetField(user.FieldName, field.TypeString, value)
@@ -337,8 +346,16 @@ func (uuo *UserUpdateOne) SetSecret(s string) *UserUpdateOne {
 }
 
 // SetAuthToken sets the "auth_token" field.
-func (uuo *UserUpdateOne) SetAuthToken(s string) *UserUpdateOne {
-	uuo.mutation.SetAuthToken(s)
+func (uuo *UserUpdateOne) SetAuthToken(u uuid.UUID) *UserUpdateOne {
+	uuo.mutation.SetAuthToken(u)
+	return uuo
+}
+
+// SetNillableAuthToken sets the "auth_token" field if the given value is not nil.
+func (uuo *UserUpdateOne) SetNillableAuthToken(u *uuid.UUID) *UserUpdateOne {
+	if u != nil {
+		uuo.SetAuthToken(*u)
+	}
 	return uuo
 }
 
@@ -527,7 +544,7 @@ func (uuo *UserUpdateOne) sqlSave(ctx context.Context) (_node *User, err error) 
 		_spec.SetField(user.FieldSecret, field.TypeString, value)
 	}
 	if value, ok := uuo.mutation.AuthToken(); ok {
-		_spec.SetField(user.FieldAuthToken, field.TypeString, value)
+		_spec.SetField(user.FieldAuthToken, field.TypeUUID, value)
 	}
 	if value, ok := uuo.mutation.Name(); ok {
 		_spec.SetField(user.FieldName, field.TypeString, value)

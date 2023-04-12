@@ -42,6 +42,10 @@ func init() {
 	post.UpdateDefaultUpdatedAt = postDescUpdatedAt.UpdateDefault.(func() time.Time)
 	userFields := schema.User{}.Fields()
 	_ = userFields
+	// userDescAuthToken is the schema descriptor for auth_token field.
+	userDescAuthToken := userFields[3].Descriptor()
+	// user.DefaultAuthToken holds the default value on creation for the auth_token field.
+	user.DefaultAuthToken = userDescAuthToken.Default.(func() uuid.UUID)
 	// userDescCreatedAt is the schema descriptor for created_at field.
 	userDescCreatedAt := userFields[5].Descriptor()
 	// user.DefaultCreatedAt holds the default value on creation for the created_at field.

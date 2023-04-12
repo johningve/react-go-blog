@@ -71,6 +71,8 @@ func ValidColumn(column string) bool {
 }
 
 var (
+	// DefaultAuthToken holds the default value on creation for the "auth_token" field.
+	DefaultAuthToken func() uuid.UUID
 	// DefaultCreatedAt holds the default value on creation for the "created_at" field.
 	DefaultCreatedAt func() time.Time
 	// DefaultUpdatedAt holds the default value on creation for the "updated_at" field.

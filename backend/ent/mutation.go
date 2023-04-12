@@ -1335,7 +1335,7 @@ type UserMutation struct {
 	id              *uuid.UUID
 	email           *string
 	secret          *string
-	auth_token      *string
+	auth_token      *uuid.UUID
 	name            *string
 	created_at      *time.Time
 	updated_at      *time.Time
@@ -1528,12 +1528,12 @@ func (m *UserMutation) ResetSecret() {
 }
 
 // SetAuthToken sets the "auth_token" field.
-func (m *UserMutation) SetAuthToken(s string) {
-	m.auth_token = &s
+func (m *UserMutation) SetAuthToken(u uuid.UUID) {
+	m.auth_token = &u
 }
 
 // AuthToken returns the value of the "auth_token" field in the mutation.
-func (m *UserMutation) AuthToken() (r string, exists bool) {
+func (m *UserMutation) AuthToken() (r uuid.UUID, exists bool) {
 	v := m.auth_token
 	if v == nil {
 		return
@@ -1544,7 +1544,7 @@ func (m *UserMutation) AuthToken() (r string, exists bool) {
 // OldAuthToken returns the old "auth_token" field's value of the User entity.
 // If the User object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *UserMutation) OldAuthToken(ctx context.Context) (v string, err error) {
+func (m *UserMutation) OldAuthToken(ctx context.Context) (v uuid.UUID, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldAuthToken is only allowed on UpdateOne operations")
 	}
@@ -1897,7 +1897,7 @@ func (m *UserMutation) SetField(name string, value ent.Value) error {
 		m.SetSecret(v)
 		return nil
 	case user.FieldAuthToken:
-		v, ok := value.(string)
+		v, ok := value.(uuid.UUID)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}

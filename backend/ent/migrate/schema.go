@@ -66,7 +66,7 @@ var (
 		{Name: "id", Type: field.TypeUUID},
 		{Name: "email", Type: field.TypeString, Unique: true},
 		{Name: "secret", Type: field.TypeString},
-		{Name: "auth_token", Type: field.TypeString, Unique: true},
+		{Name: "auth_token", Type: field.TypeUUID, Unique: true},
 		{Name: "name", Type: field.TypeString},
 		{Name: "created_at", Type: field.TypeTime},
 		{Name: "updated_at", Type: field.TypeTime},
