@@ -21,7 +21,7 @@ func TestSignupPost(t *testing.T) {
 		Name            string `json:"name" validate:"required"`
 		Email           string `json:"email" validate:"email,required"`
 		Password        string `json:"password" validate:"required,eqfield=ConfirmPassword"`
-		ConfirmPassword string `json:"confirm_password" validate:"required"`
+		ConfirmPassword string `json:"confirmPassword" validate:"required"`
 	}
 
 	const (
@@ -57,7 +57,7 @@ func TestSignupPost(t *testing.T) {
 		for _, request := range requests {
 			body, err := json.Marshal(request)
 			assert.NoError(err)
-			req := httptest.NewRequest(http.MethodPost, "/register", bytes.NewReader(body))
+			req := httptest.NewRequest(http.MethodPost, "/api/signup", bytes.NewReader(body))
 			req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 			rec := httptest.NewRecorder()
 			c := e.NewContext(req, rec)

@@ -19,8 +19,6 @@ const (
 	FieldEmail = "email"
 	// FieldSecret holds the string denoting the secret field in the database.
 	FieldSecret = "secret"
-	// FieldAdmin holds the string denoting the admin field in the database.
-	FieldAdmin = "admin"
 	// FieldName holds the string denoting the name field in the database.
 	FieldName = "name"
 	// FieldCreatedAt holds the string denoting the created_at field in the database.
@@ -54,7 +52,6 @@ var Columns = []string{
 	FieldID,
 	FieldEmail,
 	FieldSecret,
-	FieldAdmin,
 	FieldName,
 	FieldCreatedAt,
 	FieldUpdatedAt,
@@ -97,11 +94,6 @@ func ByEmail(opts ...sql.OrderTermOption) Order {
 // BySecret orders the results by the secret field.
 func BySecret(opts ...sql.OrderTermOption) Order {
 	return sql.OrderByField(FieldSecret, opts...).ToFunc()
-}
-
-// ByAdmin orders the results by the admin field.
-func ByAdmin(opts ...sql.OrderTermOption) Order {
-	return sql.OrderByField(FieldAdmin, opts...).ToFunc()
 }
 
 // ByName orders the results by the name field.

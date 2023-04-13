@@ -17,7 +17,7 @@ func (api *Api) HandlerSignupPost() echo.HandlerFunc {
 		Name            string `json:"name" validate:"required"`
 		Email           string `json:"email" validate:"email,required"`
 		Password        string `json:"password" validate:"required,eqfield=ConfirmPassword"`
-		ConfirmPassword string `json:"confirm_password" validate:"required"`
+		ConfirmPassword string `json:"confirmPassword" validate:"required"`
 	}
 
 	return func(c echo.Context) error {

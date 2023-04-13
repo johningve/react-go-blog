@@ -37,19 +37,21 @@ func run() error {
 	e.Logger.SetLevel(log.DEBUG)
 	e.Validator = validator.New()
 	e.Use(middleware.Logger())
-	e.Use(middleware.CSRF())
+	// e.Use(middleware.CSRF())
 
-	e.POST("/signup", api.HandlerSignupPost())
-	e.POST("/login", api.HandlerLoginPost())
+	publicApi := e.Group("/api")
 
-	protected := e.Group("/")
-	protected.Use(echojwt.WithConfig(echojwt.Config{
+	publicApi.POST("/signup", api.HandlerSignupPost())
+	publicApi.POST("/login", api.HandlerLoginPost())
+
+	protectedApi := publicApi.Group("/")
+	protectedApi.Use(echojwt.WithConfig(echojwt.Config{
 		NewClaimsFunc: func(c echo.Context) jwt.Claims { return new(auth.Claims) },
 		SigningKey:    auth.GetJWTSecret(),
 		TokenLookup:   "cookie:" + auth.TokenCookieName,
 	}))
 
-	protected.GET("/user", api.HandlerUserGet())
+	protectedApi.GET("/user", api.HandlerUserGet())
 
 	return e.Start(":8080")
 }

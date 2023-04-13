@@ -66,11 +66,6 @@ func Secret(v string) predicate.User {
 	return predicate.User(sql.FieldEQ(FieldSecret, v))
 }
 
-// Admin applies equality check predicate on the "admin" field. It's identical to AdminEQ.
-func Admin(v bool) predicate.User {
-	return predicate.User(sql.FieldEQ(FieldAdmin, v))
-}
-
 // Name applies equality check predicate on the "name" field. It's identical to NameEQ.
 func Name(v string) predicate.User {
 	return predicate.User(sql.FieldEQ(FieldName, v))
@@ -214,16 +209,6 @@ func SecretEqualFold(v string) predicate.User {
 // SecretContainsFold applies the ContainsFold predicate on the "secret" field.
 func SecretContainsFold(v string) predicate.User {
 	return predicate.User(sql.FieldContainsFold(FieldSecret, v))
-}
-
-// AdminEQ applies the EQ predicate on the "admin" field.
-func AdminEQ(v bool) predicate.User {
-	return predicate.User(sql.FieldEQ(FieldAdmin, v))
-}
-
-// AdminNEQ applies the NEQ predicate on the "admin" field.
-func AdminNEQ(v bool) predicate.User {
-	return predicate.User(sql.FieldNEQ(FieldAdmin, v))
 }
 
 // NameEQ applies the EQ predicate on the "name" field.

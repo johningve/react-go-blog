@@ -1,22 +1,20 @@
 import "@picocss/pico"
 import React from "react"
 import ReactDOM from "react-dom/client"
-import { RouterProvider, createBrowserRouter } from "react-router-dom"
+import { Route, RouterProvider, Routes, createBrowserRouter, createRoutesFromElements } from "react-router-dom"
 
-const router = createBrowserRouter([
-	{
-		path: "/",
-		element: <div>Hello world!</div>,
-	},
-	{
-		path: "/signup",
-		element: "Signup",
-	},
-	{
-		path: "/login",
-		element: "Login",
-	},
-])
+import Layout from "./pages/Layout"
+import Root from "./pages/Root"
+import SignUp from "./pages/SignUp"
+
+const router = createBrowserRouter(
+	createRoutesFromElements(
+		<Route element={<Layout />}>
+			<Route path="/" element={<Root />} />
+			<Route path="/signup" element={<SignUp />} />
+		</Route>,
+	),
+)
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
 	<React.StrictMode>

@@ -20,7 +20,7 @@ func (User) Fields() []ent.Field {
 		field.UUID("id", uuid.UUID{}).Default(uuid.New),
 		field.String("email").Unique(),
 		field.String("secret"),
-		field.Bool("admin"),
+		// field.Bool("admin"),
 		// field.UUID("auth_token", uuid.UUID{}).Unique().Default(uuid.New),
 		field.String("name"),
 		field.Time("created_at").Default(time.Now),

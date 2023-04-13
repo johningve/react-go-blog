@@ -42,12 +42,6 @@ func (uu *UserUpdate) SetSecret(s string) *UserUpdate {
 	return uu
 }
 
-// SetAdmin sets the "admin" field.
-func (uu *UserUpdate) SetAdmin(b bool) *UserUpdate {
-	uu.mutation.SetAdmin(b)
-	return uu
-}
-
 // SetName sets the "name" field.
 func (uu *UserUpdate) SetName(s string) *UserUpdate {
 	uu.mutation.SetName(s)
@@ -202,9 +196,6 @@ func (uu *UserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if value, ok := uu.mutation.Secret(); ok {
 		_spec.SetField(user.FieldSecret, field.TypeString, value)
 	}
-	if value, ok := uu.mutation.Admin(); ok {
-		_spec.SetField(user.FieldAdmin, field.TypeBool, value)
-	}
 	if value, ok := uu.mutation.Name(); ok {
 		_spec.SetField(user.FieldName, field.TypeString, value)
 	}
@@ -333,12 +324,6 @@ func (uuo *UserUpdateOne) SetEmail(s string) *UserUpdateOne {
 // SetSecret sets the "secret" field.
 func (uuo *UserUpdateOne) SetSecret(s string) *UserUpdateOne {
 	uuo.mutation.SetSecret(s)
-	return uuo
-}
-
-// SetAdmin sets the "admin" field.
-func (uuo *UserUpdateOne) SetAdmin(b bool) *UserUpdateOne {
-	uuo.mutation.SetAdmin(b)
 	return uuo
 }
 
@@ -525,9 +510,6 @@ func (uuo *UserUpdateOne) sqlSave(ctx context.Context) (_node *User, err error) 
 	}
 	if value, ok := uuo.mutation.Secret(); ok {
 		_spec.SetField(user.FieldSecret, field.TypeString, value)
-	}
-	if value, ok := uuo.mutation.Admin(); ok {
-		_spec.SetField(user.FieldAdmin, field.TypeBool, value)
 	}
 	if value, ok := uuo.mutation.Name(); ok {
 		_spec.SetField(user.FieldName, field.TypeString, value)

@@ -35,12 +35,6 @@ func (uc *UserCreate) SetSecret(s string) *UserCreate {
 	return uc
 }
 
-// SetAdmin sets the "admin" field.
-func (uc *UserCreate) SetAdmin(b bool) *UserCreate {
-	uc.mutation.SetAdmin(b)
-	return uc
-}
-
 // SetName sets the "name" field.
 func (uc *UserCreate) SetName(s string) *UserCreate {
 	uc.mutation.SetName(s)
@@ -176,9 +170,6 @@ func (uc *UserCreate) check() error {
 	if _, ok := uc.mutation.Secret(); !ok {
 		return &ValidationError{Name: "secret", err: errors.New(`ent: missing required field "User.secret"`)}
 	}
-	if _, ok := uc.mutation.Admin(); !ok {
-		return &ValidationError{Name: "admin", err: errors.New(`ent: missing required field "User.admin"`)}
-	}
 	if _, ok := uc.mutation.Name(); !ok {
 		return &ValidationError{Name: "name", err: errors.New(`ent: missing required field "User.name"`)}
 	}
@@ -230,10 +221,6 @@ func (uc *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 	if value, ok := uc.mutation.Secret(); ok {
 		_spec.SetField(user.FieldSecret, field.TypeString, value)
 		_node.Secret = value
-	}
-	if value, ok := uc.mutation.Admin(); ok {
-		_spec.SetField(user.FieldAdmin, field.TypeBool, value)
-		_node.Admin = value
 	}
 	if value, ok := uc.mutation.Name(); ok {
 		_spec.SetField(user.FieldName, field.TypeString, value)
