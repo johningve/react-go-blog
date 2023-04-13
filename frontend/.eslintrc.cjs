@@ -1,7 +1,14 @@
 module.exports = {
 	root: true,
 	parser: "@typescript-eslint/parser",
-	extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended", "prettier"],
+	extends: [
+		"eslint:recommended",
+		"plugin:@typescript-eslint/recommended",
+		"prettier",
+		"plugin:react/recommended",
+		"plugin:react/jsx-runtime",
+		"plugin:react-hooks/recommended",
+	],
 	plugins: ["@typescript-eslint"],
 	ignorePatterns: ["*.cjs"],
 	parserOptions: {
@@ -12,4 +19,7 @@ module.exports = {
 		browser: true,
 		es2020: true,
 	},
-};
+	rules: {
+		"react/self-closing-comp": "error",
+	},
+}
