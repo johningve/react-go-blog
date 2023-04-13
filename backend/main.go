@@ -5,11 +5,15 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/golang-jwt/jwt/v4"
 	"github.com/johningve/react-go-blog/backend/api"
+	"github.com/johningve/react-go-blog/backend/auth"
 	"github.com/johningve/react-go-blog/backend/ent"
 	"github.com/johningve/react-go-blog/backend/validator"
+	echojwt "github.com/labstack/echo-jwt/v4"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+
 	"github.com/labstack/gommon/log"
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -36,7 +40,16 @@ func run() error {
 	e.Use(middleware.CSRF())
 
 	e.POST("/signup", api.HandlerSignupPost())
-	// e.POST("/login", api.HandlerLoginPost())
+	e.POST("/login", api.HandlerLoginPost())
+
+	protected := e.Group("/")
+	protected.Use(echojwt.WithConfig(echojwt.Config{
+		NewClaimsFunc: func(c echo.Context) jwt.Claims { return new(auth.Claims) },
+		SigningKey:    auth.GetJWTSecret(),
+		TokenLookup:   "cookie:" + auth.TokenCookieName,
+	}))
+
+	protected.GET("/user", api.HandlerUserGet())
 
 	return e.Start(":8080")
 }

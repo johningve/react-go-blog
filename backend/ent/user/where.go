@@ -66,9 +66,9 @@ func Secret(v string) predicate.User {
 	return predicate.User(sql.FieldEQ(FieldSecret, v))
 }
 
-// AuthToken applies equality check predicate on the "auth_token" field. It's identical to AuthTokenEQ.
-func AuthToken(v uuid.UUID) predicate.User {
-	return predicate.User(sql.FieldEQ(FieldAuthToken, v))
+// Admin applies equality check predicate on the "admin" field. It's identical to AdminEQ.
+func Admin(v bool) predicate.User {
+	return predicate.User(sql.FieldEQ(FieldAdmin, v))
 }
 
 // Name applies equality check predicate on the "name" field. It's identical to NameEQ.
@@ -216,44 +216,14 @@ func SecretContainsFold(v string) predicate.User {
 	return predicate.User(sql.FieldContainsFold(FieldSecret, v))
 }
 
-// AuthTokenEQ applies the EQ predicate on the "auth_token" field.
-func AuthTokenEQ(v uuid.UUID) predicate.User {
-	return predicate.User(sql.FieldEQ(FieldAuthToken, v))
+// AdminEQ applies the EQ predicate on the "admin" field.
+func AdminEQ(v bool) predicate.User {
+	return predicate.User(sql.FieldEQ(FieldAdmin, v))
 }
 
-// AuthTokenNEQ applies the NEQ predicate on the "auth_token" field.
-func AuthTokenNEQ(v uuid.UUID) predicate.User {
-	return predicate.User(sql.FieldNEQ(FieldAuthToken, v))
-}
-
-// AuthTokenIn applies the In predicate on the "auth_token" field.
-func AuthTokenIn(vs ...uuid.UUID) predicate.User {
-	return predicate.User(sql.FieldIn(FieldAuthToken, vs...))
-}
-
-// AuthTokenNotIn applies the NotIn predicate on the "auth_token" field.
-func AuthTokenNotIn(vs ...uuid.UUID) predicate.User {
-	return predicate.User(sql.FieldNotIn(FieldAuthToken, vs...))
-}
-
-// AuthTokenGT applies the GT predicate on the "auth_token" field.
-func AuthTokenGT(v uuid.UUID) predicate.User {
-	return predicate.User(sql.FieldGT(FieldAuthToken, v))
-}
-
-// AuthTokenGTE applies the GTE predicate on the "auth_token" field.
-func AuthTokenGTE(v uuid.UUID) predicate.User {
-	return predicate.User(sql.FieldGTE(FieldAuthToken, v))
-}
-
-// AuthTokenLT applies the LT predicate on the "auth_token" field.
-func AuthTokenLT(v uuid.UUID) predicate.User {
-	return predicate.User(sql.FieldLT(FieldAuthToken, v))
-}
-
-// AuthTokenLTE applies the LTE predicate on the "auth_token" field.
-func AuthTokenLTE(v uuid.UUID) predicate.User {
-	return predicate.User(sql.FieldLTE(FieldAuthToken, v))
+// AdminNEQ applies the NEQ predicate on the "admin" field.
+func AdminNEQ(v bool) predicate.User {
+	return predicate.User(sql.FieldNEQ(FieldAdmin, v))
 }
 
 // NameEQ applies the EQ predicate on the "name" field.

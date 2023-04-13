@@ -41,6 +41,8 @@ func TestSignupPost(t *testing.T) {
 		{name, email, password, password},
 	}
 
+	assert := assert.New(t)
+
 	e := echo.New()
 	e.Validator = validator.New()
 
@@ -54,7 +56,7 @@ func TestSignupPost(t *testing.T) {
 	run := func(requests []request, pass bool) {
 		for _, request := range requests {
 			body, err := json.Marshal(request)
-			assert.NoError(t, err)
+			assert.NoError(err)
 			req := httptest.NewRequest(http.MethodPost, "/register", bytes.NewReader(body))
 			req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 			rec := httptest.NewRecorder()
@@ -63,11 +65,11 @@ func TestSignupPost(t *testing.T) {
 			err = h(c)
 
 			if pass {
-				assert.NoError(t, err)
-				assert.Equal(t, http.StatusCreated, rec.Code)
+				assert.NoError(err)
+				assert.Equal(http.StatusCreated, rec.Code)
 			} else {
-				assert.Error(t, err)
-				assert.NotEqual(t, http.StatusCreated, rec.Code)
+				assert.Error(err)
+				assert.NotEqual(http.StatusCreated, rec.Code)
 			}
 
 			if t.Failed() {

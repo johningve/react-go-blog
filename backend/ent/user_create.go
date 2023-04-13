@@ -35,17 +35,9 @@ func (uc *UserCreate) SetSecret(s string) *UserCreate {
 	return uc
 }
 
-// SetAuthToken sets the "auth_token" field.
-func (uc *UserCreate) SetAuthToken(u uuid.UUID) *UserCreate {
-	uc.mutation.SetAuthToken(u)
-	return uc
-}
-
-// SetNillableAuthToken sets the "auth_token" field if the given value is not nil.
-func (uc *UserCreate) SetNillableAuthToken(u *uuid.UUID) *UserCreate {
-	if u != nil {
-		uc.SetAuthToken(*u)
-	}
+// SetAdmin sets the "admin" field.
+func (uc *UserCreate) SetAdmin(b bool) *UserCreate {
+	uc.mutation.SetAdmin(b)
 	return uc
 }
 
@@ -162,10 +154,6 @@ func (uc *UserCreate) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (uc *UserCreate) defaults() {
-	if _, ok := uc.mutation.AuthToken(); !ok {
-		v := user.DefaultAuthToken()
-		uc.mutation.SetAuthToken(v)
-	}
 	if _, ok := uc.mutation.CreatedAt(); !ok {
 		v := user.DefaultCreatedAt()
 		uc.mutation.SetCreatedAt(v)
@@ -188,8 +176,8 @@ func (uc *UserCreate) check() error {
 	if _, ok := uc.mutation.Secret(); !ok {
 		return &ValidationError{Name: "secret", err: errors.New(`ent: missing required field "User.secret"`)}
 	}
-	if _, ok := uc.mutation.AuthToken(); !ok {
-		return &ValidationError{Name: "auth_token", err: errors.New(`ent: missing required field "User.auth_token"`)}
+	if _, ok := uc.mutation.Admin(); !ok {
+		return &ValidationError{Name: "admin", err: errors.New(`ent: missing required field "User.admin"`)}
 	}
 	if _, ok := uc.mutation.Name(); !ok {
 		return &ValidationError{Name: "name", err: errors.New(`ent: missing required field "User.name"`)}
@@ -243,9 +231,9 @@ func (uc *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 		_spec.SetField(user.FieldSecret, field.TypeString, value)
 		_node.Secret = value
 	}
-	if value, ok := uc.mutation.AuthToken(); ok {
-		_spec.SetField(user.FieldAuthToken, field.TypeUUID, value)
-		_node.AuthToken = value
+	if value, ok := uc.mutation.Admin(); ok {
+		_spec.SetField(user.FieldAdmin, field.TypeBool, value)
+		_node.Admin = value
 	}
 	if value, ok := uc.mutation.Name(); ok {
 		_spec.SetField(user.FieldName, field.TypeString, value)

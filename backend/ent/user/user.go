@@ -19,8 +19,8 @@ const (
 	FieldEmail = "email"
 	// FieldSecret holds the string denoting the secret field in the database.
 	FieldSecret = "secret"
-	// FieldAuthToken holds the string denoting the auth_token field in the database.
-	FieldAuthToken = "auth_token"
+	// FieldAdmin holds the string denoting the admin field in the database.
+	FieldAdmin = "admin"
 	// FieldName holds the string denoting the name field in the database.
 	FieldName = "name"
 	// FieldCreatedAt holds the string denoting the created_at field in the database.
@@ -54,7 +54,7 @@ var Columns = []string{
 	FieldID,
 	FieldEmail,
 	FieldSecret,
-	FieldAuthToken,
+	FieldAdmin,
 	FieldName,
 	FieldCreatedAt,
 	FieldUpdatedAt,
@@ -71,8 +71,6 @@ func ValidColumn(column string) bool {
 }
 
 var (
-	// DefaultAuthToken holds the default value on creation for the "auth_token" field.
-	DefaultAuthToken func() uuid.UUID
 	// DefaultCreatedAt holds the default value on creation for the "created_at" field.
 	DefaultCreatedAt func() time.Time
 	// DefaultUpdatedAt holds the default value on creation for the "updated_at" field.
@@ -101,9 +99,9 @@ func BySecret(opts ...sql.OrderTermOption) Order {
 	return sql.OrderByField(FieldSecret, opts...).ToFunc()
 }
 
-// ByAuthToken orders the results by the auth_token field.
-func ByAuthToken(opts ...sql.OrderTermOption) Order {
-	return sql.OrderByField(FieldAuthToken, opts...).ToFunc()
+// ByAdmin orders the results by the admin field.
+func ByAdmin(opts ...sql.OrderTermOption) Order {
+	return sql.OrderByField(FieldAdmin, opts...).ToFunc()
 }
 
 // ByName orders the results by the name field.
