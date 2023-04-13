@@ -2,7 +2,7 @@ import { useState } from "react"
 import { FieldValues, useForm } from "react-hook-form"
 import { Navigate } from "react-router-dom"
 
-import { useAuth } from "../hooks/useAuth"
+import { UserData, useAuth } from "../hooks/useAuth"
 import { fetchAPI } from "../utils/fetch"
 
 export function SignIn() {
@@ -20,7 +20,7 @@ export function SignIn() {
 			console.error(response)
 			return
 		}
-		login(data["email"])
+		login((await response.json()) as UserData)
 	}
 
 	return (

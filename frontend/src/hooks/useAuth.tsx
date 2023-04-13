@@ -5,9 +5,14 @@ import { useLocalStorage } from "./useLocalStorage"
 
 // source: https://blog.logrocket.com/complete-guide-authentication-with-react-router-v6/
 
+export type UserData = {
+	name: string
+	email: string
+}
+
 export type AuthContextType = {
-	user: string | null
-	login: (data: string) => void
+	user: UserData | null
+	login: (data: UserData) => void
 	logout: () => void
 }
 
@@ -23,12 +28,12 @@ const authContextDefaultValue: AuthContextType = {
 
 export const AuthContext = createContext<AuthContextType>(authContextDefaultValue)
 
-export const AuthProvider = ({ children }: PropsWithChildren) => {
-	const [user, setUser] = useLocalStorage<string | null>("user", null)
+export const AuthProvider = ({ userData, children }: PropsWithChildren & { userData: UserData }) => {
+	const [user, setUser] = useLocalStorage<UserData | null>("user", userData)
 	const navigate = useNavigate()
 
 	// call this function when you want to authenticate the user
-	const login = (data: string) => {
+	const login = (data: UserData) => {
 		setUser(data)
 		navigate("/profile")
 	}

@@ -55,6 +55,11 @@ func (api *Api) HandlerSignInPost() echo.HandlerFunc {
 		Password string `json:"password" validate:"required"`
 	}
 
+	type response struct {
+		Name  string `json:"name"`
+		Email string `json:"email"`
+	}
+
 	return func(c echo.Context) error {
 		var request request
 
@@ -92,7 +97,7 @@ func (api *Api) HandlerSignInPost() echo.HandlerFunc {
 			return echo.ErrInternalServerError.WithInternal(err)
 		}
 
-		return c.JSON(http.StatusOK, struct{}{})
+		return c.JSON(http.StatusOK, response{Name: user.Name, Email: user.Email})
 	}
 }
 

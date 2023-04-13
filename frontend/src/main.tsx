@@ -1,7 +1,7 @@
 import "@picocss/pico"
 import React from "react"
 import ReactDOM from "react-dom/client"
-import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from "react-router-dom"
+import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements, defer } from "react-router-dom"
 
 import { AuthLayout } from "./components/AuthLayout"
 import { ProtectedLayout } from "./components/ProtectedLayout"
@@ -11,10 +11,15 @@ import { Profile } from "./pages/Profile"
 import { Root } from "./pages/Root"
 import { SignIn } from "./pages/SignIn"
 import { SignUp } from "./pages/SignUp"
+import { fetchAPI } from "./utils/fetch"
+
+const getUserData = () => {
+	fetchAPI("GET", "/api/user").then((resp) => (resp.ok ? resp.json() : null))
+}
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
-		<Route element={<AuthLayout />}>
+		<Route element={<AuthLayout />} loader={() => defer({ userPromise: getUserData() })}>
 			<Route element={<Layout />}>
 				<Route path="/" element={<Root />} />
 				<Route path="/signup" element={<SignUp />} />
