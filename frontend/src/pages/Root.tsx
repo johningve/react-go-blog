@@ -20,5 +20,5 @@ export default function Root() {
 		fetchData().catch(console.error)
 	}, [])
 
-	return user ? <h1>Welcome, {user.name}</h1> : <h1>Welcome</h1>
+	return <>{user ? <h1>Welcome, {user.name}</h1> : <h1>Welcome</h1>}</>
 }
