@@ -20,16 +20,14 @@ func (api *Api) HandlerUserGet() echo.HandlerFunc {
 			return echo.ErrInternalServerError.WithInternal(err)
 		}
 
-		var response response
-
-		err = api.db.User.Query().
+		user, err := api.db.User.Query().
 			Where(user.ID(id)).
-			Select(user.FieldName, user.FieldEmail).
-			Scan(c.Request().Context(), &response)
+			Only(c.Request().Context())
+
 		if err != nil {
 			return echo.ErrInternalServerError.WithInternal(err)
 		}
 
-		return c.JSON(http.StatusOK, response)
+		return c.JSON(http.StatusOK, response{Name: user.Name, Email: user.Email})
 	}
 }

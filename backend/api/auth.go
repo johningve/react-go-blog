@@ -49,7 +49,7 @@ func (api *Api) HandlerSignupPost() echo.HandlerFunc {
 	}
 }
 
-func (api *Api) HandlerLoginPost() echo.HandlerFunc {
+func (api *Api) HandlerSignInPost() echo.HandlerFunc {
 	type request struct {
 		Email    string `json:"email" validate:"email,required"`
 		Password string `json:"password" validate:"required"`
@@ -75,7 +75,12 @@ func (api *Api) HandlerLoginPost() echo.HandlerFunc {
 			return echo.ErrInternalServerError.WithInternal(err)
 		}
 
-		err = bcrypt.CompareHashAndPassword([]byte(request.Password), []byte(user.Secret))
+		secret, err := base64.StdEncoding.DecodeString(user.Secret)
+		if err != nil {
+			return echo.ErrInternalServerError.WithInternal(err)
+		}
+
+		err = bcrypt.CompareHashAndPassword(secret, []byte(request.Password))
 		if errors.Is(err, bcrypt.ErrMismatchedHashAndPassword) {
 			return echo.ErrUnauthorized.WithInternal(err)
 		} else if err != nil {

@@ -31,9 +31,7 @@ func GenerateTokenAndSetCookie(c echo.Context, user *ent.User) error {
 	if err != nil {
 		return err
 	}
-
 	setTokenCookie(c, accessToken, exp)
-
 	return nil
 }
 
@@ -65,7 +63,8 @@ func setTokenCookie(c echo.Context, token string, expirationTime time.Time) {
 		Value:    token,
 		Path:     "/",
 		Expires:  expirationTime,
-		HttpOnly: true,
+		HttpOnly: true,                    // offers XSS protection (for the JWT token)
+		SameSite: http.SameSiteStrictMode, // offers CSRF protection
 	}
 	c.SetCookie(&cookie)
 }

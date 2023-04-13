@@ -42,12 +42,13 @@ func run() error {
 	publicApi := e.Group("/api")
 
 	publicApi.POST("/signup", api.HandlerSignupPost())
-	publicApi.POST("/login", api.HandlerLoginPost())
+	publicApi.POST("/signin", api.HandlerSignInPost())
 
-	protectedApi := publicApi.Group("/")
+	protectedApi := e.Group("/api")
 	protectedApi.Use(echojwt.WithConfig(echojwt.Config{
 		NewClaimsFunc: func(c echo.Context) jwt.Claims { return new(auth.Claims) },
-		SigningKey:    auth.GetJWTSecret(),
+		SigningKey:    []byte(auth.GetJWTSecret()),
+		SigningMethod: jwt.SigningMethodHS256.Name,
 		TokenLookup:   "cookie:" + auth.TokenCookieName,
 	}))
 

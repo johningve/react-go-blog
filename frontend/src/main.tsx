@@ -5,6 +5,7 @@ import { Route, RouterProvider, Routes, createBrowserRouter, createRoutesFromEle
 
 import Layout from "./pages/Layout"
 import Root from "./pages/Root"
+import SignIn from "./pages/SignIn"
 import SignUp from "./pages/SignUp"
 
 const router = createBrowserRouter(
@@ -12,6 +13,7 @@ const router = createBrowserRouter(
 		<Route element={<Layout />}>
 			<Route path="/" element={<Root />} />
 			<Route path="/signup" element={<SignUp />} />
+			<Route path="/signin" element={<SignIn />} />
 		</Route>,
 	),
 )
