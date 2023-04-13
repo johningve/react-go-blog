@@ -7,7 +7,7 @@ interface UserDTO {
 	email: string
 }
 
-export default function Root() {
+export function Root() {
 	const [user, setUser] = useState<UserDTO | null>(null)
 
 	useEffect(() => {

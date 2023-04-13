@@ -52,6 +52,7 @@ func run() error {
 		TokenLookup:   "cookie:" + auth.TokenCookieName,
 	}))
 
+	protectedApi.POST("/signout", api.HandlerSignoutPost())
 	protectedApi.GET("/user", api.HandlerUserGet())
 
 	return e.Start(":8080")

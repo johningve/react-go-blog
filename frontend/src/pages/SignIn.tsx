@@ -2,10 +2,11 @@ import { useState } from "react"
 import { FieldValues, useForm } from "react-hook-form"
 import { Navigate } from "react-router-dom"
 
+import { useAuth } from "../hooks/useAuth"
 import { fetchAPI } from "../utils/fetch"
 
-export default function SignIn() {
-	const [redirect, setRedirect] = useState(false)
+export function SignIn() {
+	const { login } = useAuth()
 
 	const {
 		register,
@@ -19,11 +20,7 @@ export default function SignIn() {
 			console.error(response)
 			return
 		}
-		setRedirect(true)
-	}
-
-	if (redirect) {
-		return <Navigate replace to="/" />
+		login(data["email"])
 	}
 
 	return (

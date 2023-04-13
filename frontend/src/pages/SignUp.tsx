@@ -4,7 +4,7 @@ import { Navigate } from "react-router-dom"
 
 import { fetchAPI } from "../utils/fetch"
 
-export default function SignUp() {
+export function SignUp() {
 	const [redirect, setRedirect] = useState(false)
 
 	const {
