@@ -9,5 +9,5 @@ export const ProtectedRoute = ({ children }: PropsWithChildren) => {
 		// user is not authenticated
 		return <Navigate to="/" />
 	}
-	return <>children</>
+	return <>{children}</>
 }
