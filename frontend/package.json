@@ -7,6 +7,7 @@
 		"dev": "vite",
 		"build": "tsc && vite build",
 		"preview": "vite preview",
+		"lint": "prettier --plugin-search-dir . --check . && eslint .",
 		"format": "prettier --plugin-search-dir . --write ."
 	},
 	"dependencies": {
@@ -18,7 +19,11 @@
 		"@trivago/prettier-plugin-sort-imports": "^4.1.1",
 		"@types/react": "^18.0.28",
 		"@types/react-dom": "^18.0.11",
+		"@typescript-eslint/eslint-plugin": "^5.58.0",
+		"@typescript-eslint/parser": "^5.58.0",
 		"@vitejs/plugin-react-swc": "^3.0.0",
+		"eslint": "^8.38.0",
+		"eslint-config-prettier": "^8.8.0",
 		"prettier": "^2.8.7",
 		"typescript": "^4.9.3",
 		"vite": "^4.2.0"
