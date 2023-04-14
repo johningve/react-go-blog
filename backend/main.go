@@ -43,6 +43,7 @@ func run() error {
 
 	publicApi.POST("/signup", api.HandlerSignupPost())
 	publicApi.POST("/signin", api.HandlerSignInPost())
+	publicApi.GET("/post/:id", api.HandlerPostGet())
 
 	protectedApi := e.Group("/api")
 	protectedApi.Use(echojwt.WithConfig(echojwt.Config{
@@ -54,6 +55,8 @@ func run() error {
 
 	protectedApi.POST("/signout", api.HandlerSignoutPost())
 	protectedApi.GET("/user", api.HandlerUserGet())
+
+	protectedApi.POST("/post", api.HandlerPostCreate())
 
 	return e.Start(":8080")
 }

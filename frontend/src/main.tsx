@@ -6,7 +6,9 @@ import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements, d
 import { AuthLayout } from "./components/AuthLayout"
 import { ProtectedLayout } from "./components/ProtectedLayout"
 import "./main.css"
+import { CreatePost } from "./pages/CreatePost"
 import { Layout } from "./pages/Layout"
+import { Post } from "./pages/Post"
 import { Profile } from "./pages/Profile"
 import { Root } from "./pages/Root"
 import { SignIn } from "./pages/SignIn"
@@ -24,8 +26,10 @@ const router = createBrowserRouter(
 				<Route path="/" element={<Root />} />
 				<Route path="/signup" element={<SignUp />} />
 				<Route path="/signin" element={<SignIn />} />
+				<Route path="/post/:id" element={<Post />} />
 				<Route element={<ProtectedLayout />}>
 					<Route path="/profile" element={<Profile />} />
+					<Route path="/new" element={<CreatePost />} />
 				</Route>
 			</Route>
 		</Route>,

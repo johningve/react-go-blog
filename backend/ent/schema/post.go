@@ -20,7 +20,7 @@ func (Post) Fields() []ent.Field {
 		field.String("content").Optional(),
 		field.Time("created_at").Default(time.Now),
 		field.Time("updated_at").Default(time.Now).UpdateDefault(time.Now),
-		field.Time("published_at").Optional(),
+		// field.Time("published_at").Optional(),
 	}
 }
 
