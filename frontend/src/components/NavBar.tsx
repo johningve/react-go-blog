@@ -21,6 +21,9 @@ export function NavBar() {
 				<li>
 					<NavLink to="/">Home</NavLink>
 				</li>
+				<li>
+					<NavLink to="/new">New Post</NavLink>
+				</li>
 			</ul>
 			{user ? (
 				<ul>
@@ -28,7 +31,7 @@ export function NavBar() {
 						<NavLink to="/profile">Profile</NavLink>
 					</li>
 					<li>
-						<NavLink onClick={signOut} to="/">
+						<NavLink onClick={signOut} to="/signout">
 							Sign Out
 						</NavLink>
 					</li>

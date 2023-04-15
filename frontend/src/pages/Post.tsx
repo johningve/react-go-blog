@@ -31,10 +31,12 @@ export function Post() {
 	}
 
 	return (
-		<>
-			<h1>{post.title}</h1>
-			<small>Posted by {post.author}</small>
+		<article>
+			<header>
+				<h1>{post.title}</h1>
+				<small>Posted by {post.author}</small>
+			</header>
 			<p>{post.content}</p>
-		</>
+		</article>
 	)
 }

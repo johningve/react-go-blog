@@ -5,7 +5,6 @@ import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements, d
 
 import { AuthLayout } from "./components/AuthLayout"
 import { ProtectedLayout } from "./components/ProtectedLayout"
-import "./main.css"
 import { CreatePost } from "./pages/CreatePost"
 import { Layout } from "./pages/Layout"
 import { Post } from "./pages/Post"
@@ -24,6 +23,7 @@ const router = createBrowserRouter(
 		<Route element={<AuthLayout />} loader={() => defer({ userPromise: getUserData() })}>
 			<Route element={<Layout />}>
 				<Route path="/" element={<Root />} />
+				<Route path="/signout" element={<Root />} />
 				<Route path="/signup" element={<SignUp />} />
 				<Route path="/signin" element={<SignIn />} />
 				<Route path="/post/:id" element={<Post />} />
